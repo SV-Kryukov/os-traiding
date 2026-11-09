@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeOS — Trading Operating System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div id="boot-screen">
+  <div class="boot-logo">
+    <div class="boot-icon">📊</div>
+    <div class="boot-title">TradeOS</div>
+    <div class="boot-subtitle">Trading Operating System v2.0</div>
+  </div>
+  <div class="boot-progress">
+    <div class="boot-progress-bar"></div>
+    <div class="boot-status">Загрузка торговых движков...</div>
+  </div>
+</div>
+
+<!-- ===== DESKTOP ===== -->
+<div id="desktop" class="hidden">
+  
+  <!-- Desktop Icons -->
+  <div id="desktop-icons">
+    <div class="desktop-icon" data-app="terminal" onclick="openApp('terminal')">
+      <div class="icon terminal-icon">📊</div>
+      <span>Терминал</span>
+    </div>
+    <div class="desktop-icon" data-app="portfolio" onclick="openApp('portfolio')">
+      <div class="icon portfolio-icon">💼</div>
+      <span>Портфель</span>
+    </div>
+    <div class="desktop-icon" data-app="screener" onclick="openApp('screener')">
+      <div class="icon screener-icon">🔍</div>
+      <span>Скринер</span>
+    </div>
+    <div class="desktop-icon" data-app="notebook" onclick="openApp('notebook')">
+      <div class="icon notebook-icon">🐍</div>
+      <span>Notebook</span>
+    </div>
+    <div class="desktop-icon" data-app="backtest" onclick="openApp('backtest')">
+      <div class="icon backtest-icon">📈</div>
+      <span>Бэктест</span>
+    </div>
+    <div class="desktop-icon" data-app="watchlist" onclick="openApp('watchlist')">
+      <div class="icon watchlist-icon">⭐</div>
+      <span>Ватчлист</span>
+    </div>
+  </div>
+
+  <!-- Market Ticker Strip -->
+  <div id="ticker-strip">
+    <div class="ticker-item" data-symbol="SPY">
+      <span class="ticker-symbol">SPY</span>
+      <span class="ticker-price">542.18</span>
+      <span class="ticker-change positive">+0.87%</span>
+    </div>
+    <div class="ticker-item" data-symbol="QQQ">
+      <span class="ticker-symbol">QQQ</span>
+      <span class="ticker-price">456.32</span>
+      <span class="ticker-change positive">+1.24%</span>
+    </div>
+    <div class="ticker-item" data-symbol="BTC">
+      <span class="ticker-symbol">BTC</span>
+      <span class="ticker-price">67,432</span>
+      <span class="ticker-change negative">-0.45%</span>
+    </div>
+    <div class="ticker-item" data-symbol="ETH">
+      <span class="ticker-symbol">ETH</span>
+      <span class="ticker-price">3,521</span>
+      <span class="ticker-change positive">+0.32%</span>
+    </div>
+    <div class="ticker-item" data-symbol="AAPL">
+      <span class="ticker-symbol">AAPL</span>
+      <span class="ticker-price">189.84</span>
+      <span class="ticker-change positive">+1.05%</span>
+    </div>
+    <div class="ticker-item" data-symbol="TSLA">
+      <span class="ticker-symbol">TSLA</span>
+      <span class="ticker-price">248.42</span>
+      <span class="ticker-change negative">-2.15%</span>
+    </div>
+    <div class="ticker-item" data-symbol="EUR/USD">
+      <span class="ticker-symbol">EUR/USD</span>
+      <span class="ticker-price">1.0845</span>
+      <span class="ticker-change positive">+0.12%</span>
+    </div>
+    <div class="ticker-item" data-symbol="VIX">
+      <span class="ticker-symbol">VIX</span>
+      <span class="ticker-price">14.32</span>
+      <span class="ticker-change negative">-3.45%</span>
+    </div>
+  </div>
+
+  <!-- Windows Container -->
+  <div id="windows-container"></div>
+
+  <!-- Dock (instead of taskbar) -->
+  <div id="dock">
+    <div class="dock-item" data-app="terminal" onclick="openApp('terminal')" title="Терминал">📊</div>
+    <div class="dock-item" data-app="portfolio" onclick="openApp('portfolio')" title="Портфель">💼</div>
+    <div class="dock-item" data-app="screener" onclick="openApp('screener')" title="Скринер">🔍</div>
+    <div class="dock-item" data-app="news" onclick="openApp('news')" title="Новости">📰</div>
+    <div class="dock-item" data-app="calendar" onclick="openApp('calendar')" title="Календарь">📅</div>
+    <div class="dock-item" data-app="notebook" onclick="openApp('notebook')" title="Notebook">🐍</div>
+    <div class="dock-item" data-app="backtest" onclick="openApp('backtest')" title="Бэктест">📈</div>
+    <div class="dock-item" data-app="alerts" onclick="openApp('alerts')" title="Оповещения">🔔</div>
+    <div class="dock-item" data-app="options" onclick="openApp('options')" title="Опционы">📋</div>
+    <div class="dock-item" data-app="files" onclick="openApp('files')" title="Файлы">📁</div>
+    <div class="dock-item" data-app="settings" onclick="openApp('settings')" title="Настройки">⚙️</div>
+    <div class="dock-separator"></div>
+    <div class="dock-item dock-start" onclick="toggleStartMenu()" title="Меню">⊞</div>
+  </div>
+
+  <!-- System Tray -->
+  <div id="system-tray">
+    <div class="tray-item" id="tray-portfolio" onclick="openApp('portfolio')">
+      <span class="tray-label">Портфель</span>
+      <span class="tray-value positive" id="tray-pnl">+$2,450</span>
+    </div>
+    <div class="tray-separator"></div>
+    <div class="tray-item">
+      <span id="tray-time"></span>
+    </div>
+    <div class="tray-item">
+      <span id="tray-date"></span>
+    </div>
+  </div>
+
+  <!-- Start Menu -->
+  <div id="start-menu" class="hidden">
+    <div class="start-header">
+      <div class="start-logo">📊 TradeOS</div>
+      <div class="start-search">
+        <input type="text" placeholder="🔍 Поиск приложений..." id="start-search" oninput="filterStartMenu(this.value)">
+      </div>
+    </div>
+    <div class="start-body">
+      <div class="start-section">
+        <h3>📊 Торговля</h3>
+        <div class="start-grid">
+          <div class="start-app" data-app="terminal" onclick="openApp('terminal');toggleStartMenu()">📊 Терминал</div>
+          <div class="start-app" data-app="portfolio" onclick="openApp('portfolio');toggleStartMenu()">💼 Портфель</div>
+          <div class="start-app" data-app="screener" onclick="openApp('screener');toggleStartMenu()">🔍 Скринер</div>
+          <div class="start-app" data-app="watchlist" onclick="openApp('watchlist');toggleStartMenu()">⭐ Ватчлист</div>
+          <div class="start-app" data-app="options" onclick="openApp('options');toggleStartMenu()">📋 Опционы</div>
+          <div class="start-app" data-app="alerts" onclick="openApp('alerts');toggleStartMenu()">🔔 Оповещения</div>
+        </div>
+      </div>
+      <div class="start-section">
+        <h3>🧪 Аналитика</h3>
+        <div class="start-grid">
+          <div class="start-app" data-app="notebook" onclick="openApp('notebook');toggleStartMenu()">🐍 Notebook</div>
+          <div class="start-app" data-app="backtest" onclick="openApp('backtest');toggleStartMenu()">📈 Бэктест</div>
+          <div class="start-app" data-app="news" onclick="openApp('news');toggleStartMenu()">📰 Новости</div>
+          <div class="start-app" data-app="calendar" onclick="openApp('calendar');toggleStartMenu()">📅 Календарь</div>
+        </div>
+      </div>
+      <div class="start-section">
+        <h3>🔧 Система</h3>
+        <div class="start-grid">
+          <div class="start-app" data-app="files" onclick="openApp('files');toggleStartMenu()">📁 Файлы</div>
+          <div class="start-app" data-app="settings" onclick="openApp('settings');toggleStartMenu()">⚙️ Настройки</div>
+        </div>
+      </div>
+    </div>
+    <div class="start-footer">
+      <div class="start-user">👤 Trader</div>
+      <div class="start-power" onclick="shutdownTradeOS()">⏻</div>
+    </div>
+  </div>
+</div>
+
+<!-- Shutdown overlay -->
+<div id="shutdown-overlay" class="hidden">
+  <div class="shutdown-dialog">
+    <h2>Завершение работы TradeOS...</h2>
+    <div class="spinner"></div>
+    <div class="shutdown-text">Сохранение позиций... Отключение от бирж...</div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="apps.js"></script>
+<script src="os.js"></script>
+</body>
+</html>
